@@ -1,5 +1,6 @@
 from django.urls import path, include
 
 urlpatterns = [
-    path('api/', include('tasks.urls')),  # Connect routers to tasks
+    # Connect routers to tasks
+    path('api/', include('tasks.urls')),
 ]
