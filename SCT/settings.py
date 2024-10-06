@@ -135,3 +135,13 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'SCT',
+        'USER': 'postgres',
+        'PASSWORD': 'nestorko85',
+        'HOST': 'localhost',  # або IP-адреса вашого сервера
+        'PORT': '5432',       # стандартний порт PostgreSQL
+    }
+}
