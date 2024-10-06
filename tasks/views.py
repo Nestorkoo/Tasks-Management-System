@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics
 from rest_framework.response import Response
-from .serializers import TaskSerializer, TaskListSerializer
+from .serializers import TaskSerializer, TaskListSerializer, TaskEditSerializer
 from rest_framework import status as st
 from .models import Task
 
@@ -40,3 +40,25 @@ class TaskListSort(generics.ListAPIView):
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data, status=st.HTTP_200_OK)
 
+class EditTask(generics.UpdateAPIView):
+    queryset = Task.objects.all()
+    serializer_class = TaskEditSerializer
+
+    def put(self, request, *args, **kwargs):
+        task = self.get_object()
+        serializer = self.get_serializer(task, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()  # Зберігаємо оновлені дані
+            return Response(serializer.data, status=st.HTTP_200_OK)  # Повертаємо оновлені дані
+
+        return Response(serializer.errors, status=st.HTTP_400_BAD_REQUEST)
+
+class TaskDelete(generics.DestroyAPIView):
+    queryset = Task.objects.all()
+    serializer_class = TaskListSerializer
+
+    def delete(self, request, *args, **kwargs):
+        task = self.get_object()
+        task.delete()
+        return Response('Succesful deleted!',status=st.HTTP_200_OK)
