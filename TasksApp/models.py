@@ -5,6 +5,7 @@ class Task(models.Model):
         ('new', 'New'),
         ('in_progress', 'In Progress'),
         ('completed', 'Completed'),
+        ('overdue', 'Overdue'),
     ]
     title = models.CharField(max_length=200)
     description = models.TextField(null=True)
@@ -21,3 +22,5 @@ class Task(models.Model):
     def __str__(self):
         return self.title
     
+class Notification(models.Model):
+    message = models.CharField()

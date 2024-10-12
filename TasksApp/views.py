@@ -62,3 +62,26 @@ class TaskDelete(generics.DestroyAPIView):
         task = self.get_object()
         task.delete()
         return Response('Succesful deleted!',status=st.HTTP_200_OK)
+
+class StatisticTasks(generics.ListAPIView):
+    def get(self, request, *args, **kwargs):
+        task_count = Task.objects.count()
+        return Response(f"Total task: {task_count}", status=st.HTTP_201_CREATED)
+
+class StatisticByCategory(generics.ListAPIView):
+    queryset = Task.objects.all()
+    serializer_class = TaskListSerializer
+
+    def get(self, request, *args, **kwargs):
+        category = self.kwargs.get('category')
+        queryset = self.queryset
+        
+        if category:
+            queryset = queryset.filter(category=category)
+        
+        serializer = self.get_serializer(queryset, many=True)
+
+        return Response({
+            "message": "Tasks with a category:",
+            'tasks': serializer.data
+        }, status=st.HTTP_200_OK)
