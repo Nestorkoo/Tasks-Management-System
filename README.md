@@ -47,7 +47,7 @@ pip install -r requirements.txt
 ```bash
 redis-server
 ```
-If redis isn't installed download it!!!
+If redis isn't installed - download it!!!
 
 ### 5. Configure Celery in Django settings
 Add the following to your settings.py:
